@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CrossControl | Demo Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Script of W3 School to include an html file in this file -->
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
+
+  <!-- FLOT CHARTS -->
+  <script src="plugins/flot/jquery.flot.js"></script>
+  <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+  <script src="plugins/flot-old/jquery.flot.resize.min.js"></script>
+  <!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+  <script src="plugins/flot-old/jquery.flot.pie.min.js"></script>
+
+  <!-- Amazon AWS sdk -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+
+  <!-- MapBox include the GL JS files -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='map_functions.js'></script>
+
+  <!-- Database interaction functions -->
+  <script src='database_functions.js'></script>
+  <!-- Real-Time chart functions -->
+  <script src='real_time_chart_functions.js'></script>
+
+  <script>
+    $(function(){
+      $("#includedContent").load("navbar.html");
+    });
+  </script>
+
+  <script>
+
+
+
+  </script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <div id="includedContent"></div>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <script>
+    $(function(){
+      $("#DivContent").load("sidebar.html");
+    });
+  </script>
+
+   <div id="DivContent"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Vehicle Real-Time Info</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Demo dashboard</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- TABLE -->
+        <div id="table_div" class="card-body p-0">
+          <table id="vehicles_table" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Vehicle Name</th>
+                <th>Fleet Name</th>
+                <th>Engine Temperature</th>
+                <th>Fuel</th>
+                <th>Working Hours</th>
+              </tr>
+            </thead>
+            <tbody id="tbody_vehicles_table">
+
+            </tbody>
+          </table>
+        </div>
+        <!-- /.TABLE -->
+        <!-- temperature-box -->
+        <div id="engine_temperature_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-danger"><i class="fa fa-thermometer-half"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Engine Temperature</span>
+                <span id="engine_temperature_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.temperature-box -->
+
+        <!-- fuel-box -->
+        <div id="fuel_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-danger"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Fuel</span>
+                <span id="fuel_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.fuel-box -->
+
+        <!-- status-box -->
+        <div id="status_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Vechicle Status</span>
+                <span id="status_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.status-box -->
+
+        <!-- working hours-box -->
+        <div id="workinghrs_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-info"><i class="fa fa-clock"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Working Hours</span>
+                <span id="workinghrs_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.working hours-box -->
+
+        <!-- tires pressure-box -->
+        <div id="tirePressures_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-info elevation-1"><i class="fa fa-car"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Tire Pressure</span>
+                <span id="tirePressures_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.tires pressure-box -->
+
+        <!-- tilt box -->
+        <div id="tilt_div" class="col-md-3 col-sm-6 col-12" style="display:none;">
+            <div class="info-box" >
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-car fa-rotate-90"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Vehicle Tilt</span>
+                <span id="tilt_value" class="info-box-number"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.tilt pressure-box -->
+
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <!-- interactive chart -->
+          <div id="interactive-chart" class="card card-primary card-outline" style="display:none;">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                Real-time engine temperature
+              </h3>
+
+              <div class="card-tools">
+                Real time
+                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                  <button id="chart_off_button" type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="interactive" style="height: 300px;"></div>
+            </div>
+            <!-- /.card-body-->
+          </div>
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /. interactive chart -->
+
+      <div class="row">
+        <div class="col-12">
+          <!-- Map -->
+          <div id='map' style='height: 300px; display: none;'></div>
+          <script>
+            generateMap();
+          </script>
+          <!-- /.Map -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+</body>
+</html>
