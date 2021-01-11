@@ -283,9 +283,6 @@ function set_vehicles_sidebar(){
         tilt=""+result;
     });
 
-    promise_result=readItem(vehicle_id, "temperature");
-    console.log(promise_result);
-
     document.getElementById("engine_temperature_value").innerHTML=""+temperature_value+"°";
     document.getElementById("status_value").innerHTML=""+status;
     document.getElementById("workinghrs_value").innerHTML=""+workingHours;
