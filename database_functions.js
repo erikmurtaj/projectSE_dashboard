@@ -2,9 +2,9 @@ AWS.config.update({
     region: "eu-north-1",
     endpoint: "https://dynamodb.eu-north-1.amazonaws.com",
     // accessKeyId default can be used while using the downloadable version of DynamoDB.
-    accessKeyId: "AKIA43VWX2S7CEX3WRFW",
+    accessKeyId: "insert_your_demo_key_ID",
     // secretAccessKey default can be used while using the downloadable version of DynamoDB.
-    secretAccessKey: "NlX6LTY4xNh0UPeGA79sO0c2eCQ3D8DEvkBmgKJp"
+    secretAccessKey: "insert_your_demo_access_key"
   });
 AWS.config.update({ region: 'eu-north-1' });
 var docClient = new AWS.DynamoDB.DocumentClient();
